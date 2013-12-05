@@ -1,0 +1,126 @@
+obdy { background-color: #FFFFFF; margin: 0; display: relative;}
+
+/*Desactivar Intercalado de colores en tablas*/
+table tr:nth-child(even) td {
+  background: transparent;
+}
+
+/*gary nuevo*/
+#contenedor { width: 500px; margin: 40px; }
+#login-cont { width: 200px; margin: 40px; }
+      button[type] { margin: 0.5em 0; }
+
+.div_botones {
+        float:left;
+        height:auto;
+        width:auto;
+        margin-left: 0px;
+}
+/*Fin Gary Nuevo*/
+div#formulario{
+	width: 350px;
+	margin-top: 35px;
+	margin-left: 35px;
+	}
+
+div#centrar {
+width:390px;
+height:300px;
+position:absolute;
+top:10%;
+left:2%;
+}
+
+.center_screen {
+position: fixed;
+  top: 10%;
+  left: 10%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
+
+.div_header{
+    width: auto;
+    height: auto;
+}
+
+.div_iz {
+	float:left;
+	height:50px;
+	width:70%;
+        color: white;
+        font: bold 14px arial,helvetica,sans-serif;
+        background: #003040; 
+	/*background: linear-gradient(#003040, #002535);*/
+
+       
+}
+
+.div_der {
+	float:left;
+	height:50px;
+	width:30%;
+        color: white;
+        font: bold 10px arial,helvetica,sans-serif;
+        background: #003040; 
+	/*background: linear-gradient(#003040, #002535);*/
+}
+
+.color_pie{
+    width: auto;
+    height: auto;
+}
+form#ancho{
+	height: auto;
+	width: 50%;
+}
+.nombre_programa{
+    margin-top: 13px;
+    margin-left: 30px;
+}
+
+.usuario_logeado{
+    margin-top: 17px;
+    margin-left: 30px;
+}
+
+input.texto{width: 170px;padding:5px;}
+input.login{width: 100px;padding:5px;}
+input.medio{width: 150px;padding:5px;}
+
+button[type] { margin: 0.5em 0; }
+
+div#titulo{
+    width:auto;
+    margin-top:1%;
+    margin-left:1%;
+    /*border: 1px solid #cccccc;*/
+}
+
+div#alinear{
+	/*width:70%;*/
+	/*height:auto;*/
+	margin-top: 5px;
+        margin-left: 15px;
+    /*border: 1px solid #cccccc;*/
+    
+}
+div#completo{
+    
+    width:100%;
+    
+}
+
+
+
+.justificar{
+text-align : justify;
+}
+
+
+.styled-select select {
+   background: transparent;
+   width: 160px;
+   border: 1px solid #bbb;
+   height: 28px;
+   }

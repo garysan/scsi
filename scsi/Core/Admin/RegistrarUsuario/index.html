@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Registro de Usuarios</title>
+    <link rel="stylesheet" type="text/css" media="screen, projection" href="/css/blueprint/screen.css" />
+    <link rel="stylesheet"  type="text/css" media="screen, projection" href="/css/blueprint/plugins/buttons/screen.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/css/blueprint/print.css" />
+    <!--[if IE]><link rel="stylesheet" type="text/css" media="screen, projection" href="/css/ie.css"><![endif]-->
+    <!--Personal-->
+    <link href="/css/estilo.css" rel="stylesheet" type="text/css" />
+    <link href="/css/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="registrar.js"></script>
+    </head>
+    
+  <body>
+    <div id="formulario">
+            <legend>Registro de Usuarios</legend>
+			<table>
+			<tr>
+			<td><label >Usuario:</label></td>
+			<td><input type="text" id="usuario" name="usuario" class="medio ui-widget-content ui-corner-all" /></td>
+			</tr>
+			<tr>
+			<td><label >Nombre:</label></td>
+			<td><input type="text" id="nombre" name="nombre" class="medio ui-widget-content ui-corner-all" /></td>
+            </tr>
+			<tr>
+            <td><label >Correo:</label></td>
+            <td><input type="text" id="email" name="email" class="medio ui-widget-content ui-corner-all" /></td>
+            </tr>
+			<tr>
+            <td><label >Rol:</label></td>
+            <td><div class="styled-select">
+          		<select id="rol">
+            	<option name=empty value=empty> </option>
+            	<option name=admin value=admin>Administrador</option>
+            	<option name=super value=super>Supervisor</option>
+          		</select> 
+          		</div>
+            </td>
+			</tr>
+			<tr>
+            <td><label >Clave:</label></td>
+            <td><input type="password" id="password" name="password" class="medio ui-widget-content ui-corner-all" /></td>
+            </tr>
+            
+            
+            <tr><td></td>
+			<td><div class="div_botones">
+	            <button type="submit" class="button positive" id="registrar" name="registrar"><img alt="ok" src="/css/blueprint/plugins/buttons/icons/tick.png" /> 
+	             Registrar</button>
+	            <button type="submit" class="button negative" id="cancelar" name="cancelar"><img alt="cancel" src="/css/blueprint/plugins/buttons/icons/cross.png" /> 
+	             Cancelar</button>
+            </div></td>
+		    </tr>
+		    <tr>
+	        <td colspan="2"><div id="resultado"></div></td>
+	        </tr>
+	        </table>
+    </div>
+  </body>
+</html>

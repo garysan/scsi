@@ -1,0 +1,118 @@
+acl all src all
+acl manager proto cache_object
+acl localhost src 127.0.0.1/32
+acl to_localhost dst 127.0.0.0/8
+
+### RED_SOPORTADA ###
+acl localnet src 192.168.1.0/255.255.255.0
+
+
+acl SSL_ports port 443 563  # https
+acl SSL_ports port 563      # snews
+acl SSL_ports port 873      # rsync
+acl Safe_ports port 80      # http
+acl Safe_ports port 21      # ftp
+acl Safe_ports port 443     # https
+acl Safe_ports port 443 563 # https
+acl Safe_ports port 70      # gopher
+acl Safe_ports port 210     # wais
+acl Safe_ports port 1025-65535  # unregistered ports
+acl Safe_ports port 280     # http-mgmt
+acl Safe_ports port 488     # gss-http
+acl Safe_ports port 591     # filemaker
+acl Safe_ports port 777     # multiling http
+acl Safe_ports port 631     # cups
+acl Safe_ports port 873     # rsync
+acl Safe_ports port 901     # SWAT
+acl purge method PURGE
+acl CONNECT method CONNECT
+
+### LISTAS ####
+acl denegado url_regex -i "/etc/squid/denegadoslist"
+acl extlimit url_regex -i "/etc/squid/ext"
+acl videolimit url_regex -i "/etc/squid/videolist"
+
+### LISTA_IP ###
+acl master src "/etc/squid/clientes/masterlist"
+acl internet src "/etc/squid/clientes/interlist"
+acl clientes src "/etc/squid/clientes/clientlist"
+
+### HORARIO ###
+#acl horario time MTWHFSA 08:00-23:00
+
+### LISTA_IP_PERMITIDA ###
+http_access allow clientes internet master !denegado
+
+
+# Only allow cachemgr access from localhost
+http_access allow manager localhost
+http_access deny manager
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+http_access allow localhost
+
+### BLOQUEO_IP_AJENA ###
+http_access deny all !master !clientes !internet
+
+icp_access allow localnet
+icp_access deny all
+
+### PUERTO_MODO_SQUID ###
+http_port 3128 transparent
+hierarchy_stoplist cgi-bin ?
+
+### MEMORIA_CACHE ###
+cache_mem 732 MB
+
+memory_replacement_policy heap LFUDA
+cache_replacement_policy heap LFUDA
+cache_dir ufs /var/spool/squid 10000 16 256
+minimum_object_size 100 kB
+maximum_object_size 512 kB
+cache_swap_low 100
+cache_swap_high 80
+access_log /var/log/squid/access.log squid
+cache_log none
+
+### SQUID_GUARD ###
+url_rewrite_program /usr/bin/squidGuard tc/squid/squidGuard.conf
+
+#Suggested default:
+refresh_pattern ^ftp:       1440    20% 10080
+refresh_pattern ^gopher:    1440    0%  1440
+refresh_pattern -i (/cgi-bin/|\?) 0 0%  0
+refresh_pattern (Release|Package(.gz)*)$    0   20% 2880
+refresh_pattern .       0   20% 4320
+
+# Don't upgrade ShoutCast responses to HTTP
+acl shoutcast rep_header X-HTTP09-First-Line ^ICY\s[0-9]
+upgrade_http0.9 deny shoutcast
+acl apache rep_header Server ^Apache
+broken_vary_encoding allow apache
+extension_methods REPORT MERGE MKACTIVITY CHECKOUT
+half_closed_clients off
+
+### HOSTNAME_SQUID ###
+visible_hostname Scorpion
+### SERVIDOR_DNS ###
+dns_nameservers 192.168.1.1
+
+### HORARIO DEL DELAY ###
+acl day time 07:00-23:00
+
+### CANTIDAD DELAYS ###
+delay_pools 3
+
+delay_class 1 2
+delay_class 2 2
+delay_class 3 2
+
+delay_parameters 1 -1/-1 -1/-1
+delay_parameters 2 80000/80000 80000/80000
+delay_parameters 3 80000/80000 80000/80000
+delay_access 1 allow master
+delay_access 1 deny all
+delay_access 2 allow internet
+delay_access 2 deny all
+delay_access 3 allow clientes
+delay_access 3 deny all

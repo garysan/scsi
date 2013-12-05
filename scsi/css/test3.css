@@ -1,0 +1,21 @@
+#Superior {
+ position:absolute;
+ top:0;
+ left:0; width:100%;
+ height:15%;
+ overflow:auto; }
+
+#Izquierda {
+position:absolute;
+top:15%;
+left:0;
+width:25%;
+height:85%;
+overflow:auto; }
+
+#Derecha {
+position:absolute;
+top:15%; left:25%;
+width:75%;
+height:85%;
+overflow:auto; }

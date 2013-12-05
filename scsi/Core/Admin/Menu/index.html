@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Añadir Archivo a Modulo</title>
+    <link rel="stylesheet" type="text/css" media="screen, projection" href="/css/blueprint/screen.css" />
+    <link rel="stylesheet"  type="text/css" media="screen, projection" href="/css/blueprint/plugins/buttons/screen.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/css/blueprint/print.css" />
+    <!--[if IE]><link rel="stylesheet" type="text/css" media="screen, projection" href="/css/ie.css"><![endif]-->
+    <!--Personal-->
+    <link href="/css/estilo.css" rel="stylesheet" type="text/css" />
+    <link href="/css/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.10.2.custom.js"></script>
+    <script type="text/javascript" src="menu.js"></script>
+    <script>
+    (function() {
+      
+    $("#box").dialog({
+     modal: true,
+      buttons: {
+        Ok: function() {
+             $( this ).dialog("close");
+        }
+      }
+      
+    });
+  });
+  </script>
+    </head>
+    
+  <body>
+    <div id="formulario">
+           <legend>Archivo</legend>
+           
+            <table>
+			<tr>
+			<td><label>Modulo:</label></td>
+            <td><div class="styled-select">
+	            <select id="modulo">
+	            <option id="vacio"></option>
+	            </select>           
+            </div>
+            </td>
+            </tr>
+            <tr>
+			<td><label>Item:</label></td>
+            <td><div class="styled-select">
+	            <select id="item">
+	            <option id="vacio"></option>
+	            </select>           
+            </div>
+            </td>
+            </tr>
+            
+            <tr>
+            <td><label>Ruta:</label></td>
+            <td><input type="text" id="showruta" class="medio ui-widget-content ui-corner-all" /></td>
+            </tr>
+                                                
+            <tr><td></td>
+            	<td>
+            	  <div id="botones" class="div_botones">
+		          <button type="submit" class="button positive"  id="update">
+		          <img alt="ok" src=
+		          "/css/blueprint/plugins/buttons/icons/tick.png" /> 
+		          Actualizar
+		          </button>
+		          
+		          <button type="submit" class="button negative" id="quitar">
+		          <img alt="cancel" src=
+		          "/css/blueprint/plugins/buttons/icons/cross.png" /> 
+		          Quitar
+		          </button>
+		          </div>
+                </td>
+	    	</tr>
+	    	
+	    	<tr>
+        	<td colspan="2"><div id="resultado"></div></td>
+        	</tr>
+        	</table>
+    </div>
+    <div id="dialog-form" title="Descripcion">
+    <form>
+	<fieldset>
+	<label for="valor">Descripcion</label>
+	<input type="text" name="valor" id="valor" class="text ui-widget-content ui-corner-all" />
+	</fieldset>
+	</form>
+	</div>
+          
+    <div id="dialog-form-sub" title="SubMenu">
+    <form>
+	<fieldset>
+	<label for="desc">Nombre</label>
+	<input type="text" name="desc" id="desc" class="text ui-widget-content ui-corner-all" />
+        <br/>
+        <label for="ruta">Ruta</label>
+        <input type="text" name="ruta" id="ruta" class="text ui-widget-content ui-corner-all" />
+	</fieldset>
+            
+	</form>
+	</div>
+	
+	 
+	 
+  </body>
+</html>

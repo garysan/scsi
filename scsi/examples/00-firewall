@@ -1,0 +1,60 @@
+#!/bin/sh
+### PARAMETROS ###
+PATH=/usr/sbin:/sbin:/bin:/usr/bin
+SERVER="192.168.1.1"
+INTERNET="eth0"
+LAN_IN="eth1"
+SQUID_PORT="3128"
+GLOB_BLOCK="SI"
+### GENERAL ###
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+### IO_PARAMS ###
+iptables -P INPUT DROP
+#iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+
+### LOCAL ###
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -t nat -P PREROUTING ACCEPT
+iptables -t nat -P POSTROUTING ACCEPT
+iptables -A INPUT -i $INTERNET -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables --table nat --append POSTROUTING --out-interface $INTERNET -j MASQUERADE
+iptables --append FORWARD --in-interface $LAN_IN -j ACCEPT
+iptables -A INPUT -i $LAN_IN -j ACCEPT
+iptables -A OUTPUT -o $LAN_IN -j ACCEPT
+iptables -t nat -A PREROUTING -i $LAN_IN -p tcp --dport 80  -j DNAT --to $SERVER:$SQUID_PORT
+#iptables -t nat -A PREROUTING -i $LAN_IN -p tcp --dport 443 -j DNAT --to $SERVER:$SSL_PORT
+
+if [ "$GLOB_BLOCK" = "SI" ]; then
+
+IPS="192.168.1.20"
+CONV_IPS=`echo $IPS | sed 's/,/ /g'`
+DOM="youtube.com,www.youtube.com"
+CONV_DOM=`echo $DOM | sed 's/,/ /g'`
+##############Dominios a bloquearse en general
+for dom in $CONV_DOM; do
+        iptables -N $dom
+        iptables -A $dom -d $dom -p tcp -m tcp --dport 443 -j DROP
+        iptables -A $dom -d $dom -p tcp -m tcp --dport 443 -j REJECT
+        iptables -A $dom -j RETURN
+        iptables -I FORWARD -j $dom
+        iptables -I OUTPUT -j $dom
+done
+#############Excepciones a IPS
+for ips in $CONV_IPS; do
+        for dom in $CONV_DOM; do
+        iptables -I $dom -d $dom -s $ips -p tcp --dport 443 -j ACCEPT
+        done
+done
+
+fi
+
+

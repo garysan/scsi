@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Re-enviar clave</title>
+    <link rel="stylesheet" type="text/css" media="screen, projection" href="/css/blueprint/screen.css" />
+    <link rel="stylesheet"  type="text/css" media="screen, projection" href="/css/blueprint/plugins/buttons/screen.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/css/blueprint/print.css" />
+    <!--[if IE]><link rel="stylesheet" type="text/css" media="screen, projection" href="/css/ie.css"><![endif]-->
+    <!--Personal-->
+    <link href="/css/estilo.css" rel="stylesheet" type="text/css" />
+    <link href="/css/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="recuperar.js"></script>
+    </head>
+
+<body>
+<div id="formulario" >
+            
+	    <legend>Restablecer Clave</legend>
+		<table>
+		<tr>
+		<td><label >Correo:</label></td>
+	    <td><input type="text" id="correo" name="correo" class="medio ui-widget-content ui-corner-all" /></td>
+	    </tr>
+	    
+		<tr>
+		<td><label >Usuario</label></td>
+	    <td><input type="text" id="usuario" name="usuario" class="medio ui-widget-content ui-corner-all" /></td>
+	    </tr>
+		
+		<tr><td></td>
+		<td><div class="div_botones">
+	    <button type="submit" class="button positive" id="enviar" name="enviar"><img alt="ok" src="/css/blueprint/plugins/buttons/icons/tick.png" /> 
+	    Envia Nueva Clave</button>
+	    </div></td>
+	    </tr>
+	    <tr>
+        <td colspan="2"><div id="resultado"></div></td>
+        </tr>
+        </table>
+            <b><p>Recuerde que los datos deben coincidir con los datos registrados en el sistema.</p></b>
+</div>
+</body>
+</html>
