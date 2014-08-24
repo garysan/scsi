@@ -1,4 +1,4 @@
-obdy { background-color: #FFFFFF; margin: 0; display: relative;}
+body { background-color: #FFFFFF; margin: 0; display: relative;}
 
 /*Desactivar Intercalado de colores en tablas*/
 table tr:nth-child(even) td {
@@ -124,3 +124,29 @@ text-align : justify;
    border: 1px solid #bbb;
    height: 28px;
    }
+
+
+/*Nuevo!*/
+
+#cabeza {
+    border: 1px solid red;
+    height: 12%;
+}
+
+#menu{
+    border: 1px solid red;
+    float: left;
+    width: 15%;
+    height:70%;
+}
+
+#contenido {
+    border: 1px solid blue;
+    margin-left: 15%;
+    height: 70%;
+}
+
+#pie {
+    border: 1px solid red;
+    height: 5%;
+}

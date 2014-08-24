@@ -52,7 +52,7 @@ PROCEDIMIENTO DE INSTALACIÓN SCSI
 	1. Crear un archivo de apache en /etc/apache2/sites-available/
             o simplemente edite el archivo default
 	2. Archivo con el nombre deseado con el siguiente contenido:
-
+        3. a2enmod cgi
 <VirtualHost *:80>
         ServerAdmin gary@sandi.com
         DocumentRoot /scsi/scsi
@@ -82,14 +82,13 @@ PROCEDIMIENTO DE INSTALACIÓN SCSI
 	1. Obtenga el src en .tar.gz desde la web del proyecto scsi.sf.net
 	2. Cambiar permisos del directorio:
 		chown www-data:www-data /scsi/scsi -R
-		chmod 770 /home/scsi -R
-
+		chmod 777 /scsi/scsi -R
 
 4. Compilación previa. (Ejecutar como root)
     cd Tools/bin/
     sh RUN_AS_ROOT.sh
 
-5. Base de datos:
+5. Base de datos ingresar con mysql -u root -p :
     Crear usuario con:
 
     CREATE USER scsi@localhost IDENTIFIED BY 'scsi';
