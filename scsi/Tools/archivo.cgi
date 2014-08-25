@@ -23,7 +23,7 @@ my $fixmo  = $mon + 1;
 my $tz = $isdst == 1 ? "CDT" : "CST";
 my $yr2 = substr( $longyr, 2, 2 );
 ##############Fin de la Hora.
-our $dbh = DBI->connect( "dbi:mysql:scsi", "scsi", "scsi") or 
+our $dbh = DBI->connect( "dbi:mysql:$config::database","$config::userbase", "$config::passbase") or 
     &vererror("Imposible conectar a la BD:\n $DBI::errstr");
 
 my $nmod = param('nmod');

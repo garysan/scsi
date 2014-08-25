@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	$("#usuario").focus();
+        $("#nombre").convertUpper(6,20);
+
     $("#registrar").click(function(){
     	registrar();
     });
@@ -10,7 +12,7 @@ $(document).ready(function(){
     });
 });
 function registrar(){
-    if (usuario.length!=0 && password.length!=0){
+    if (usuario.length!=0){
       $.ajax({
         type: "POST",
         url: "registrar.cgi",
@@ -18,8 +20,7 @@ function registrar(){
         data:{	usuario:$("#usuario").val(),
         		nombre:$("#nombre").val(),
         		email:$("#email").val(),
-        		rol:$("#rol").val(),
-        		password:$("#password").val()
+        		rol:$("#rol").val()
         		},
         success: function(msg){
         	$("#resultado").fadeIn(0);
@@ -52,7 +53,6 @@ function limpiar_registro(){
     $("#nombre").val('');
     $("#email").val('');
     $("#rol").val('');
-    $("#password").val('');
     $("#usuario").focus();
 }
 

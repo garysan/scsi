@@ -74,15 +74,15 @@ Content-type: text/html\n\n
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>$arg</title>
     <link rel="stylesheet" type="text/css" 
-      href="../../css/estilo.css" />
+      href="/css/estilo.css" />
     <link rel="stylesheet" type="text/css" 
-      href="../../css/jquery-ui-1.10.2.custom.css" />
+      href="/css/jquery-ui-1.10.2.custom.css" />
     <script type="text/javascript"
-      src="../../js/jquery.js"></script>
+      src="/js/jquery.js"></script>
     <script type="text/javascript"
-      src="../../js/jquery-ui-1.10.2.custom.js"></script>
+      src="/js/jquery-ui-1.10.2.custom.js"></script>
       <script type="text/javascript"
-      src="../../js/jslib.js"></script>
+      src="/js/jslib.js"></script>
      <script>
     \$(function() {
       \$( "#menu" ).menu();
@@ -106,13 +106,13 @@ Content-type: text/html\n\n
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>$arg</title>
     <link rel="stylesheet" type="text/css" 
-      href="../../css/estilo.css" />
+      href="/css/estilo.css" />
     <link rel="stylesheet" type="text/css" 
-      href="../../css/jquery-ui-1.10.2.custom.css" />
+      href="/css/jquery-ui-1.10.2.custom.css" />
     <script type="text/javascript"
-      src="../../js/jquery.js"></script>
+      src="/js/jquery.js"></script>
     <script type="text/javascript"
-      src="../../js/jquery-ui-1.10.2.custom.js"></script>
+      src="/js/jquery-ui-1.10.2.custom.js"></script>
       <script type="text/javascript"
       src="$arg2"></script>
      <script>
@@ -142,15 +142,15 @@ Content-type: text/html\n\n
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" 
-      href="../../css/estilo.css" />
+      href="/css/estilo.css" />
     <link rel="stylesheet" type="text/css" 
-      href="../../css/jquery-ui-1.10.2.custom.css" />
+      href="/css/jquery-ui-1.10.2.custom.css" />
     <script type="text/javascript"
-      src="../../js/jquery_menu.js"></script>
+      src="/js/jquery_menu.js"></script>
     <script type="text/javascript"
-      src="../../js/jquery-ui-1.10.2.custom.js"></script>
+      src="/js/jquery-ui-1.10.2.custom.js"></script>
       <script type="text/javascript"
-      src="../../js/jslib.js"></script>
+      src="/js/jslib.js"></script>
      <script>
      \$(document).ready(function(){
      \$("#accordian h3").click(function(){
@@ -177,7 +177,7 @@ return @val[0];
 }
 sub copy_log{
 
-    my $SQUID_CP = '../../Tools/bin/squid_copy';
+    my $SQUID_CP = '/Tools/bin/squid_copy';
     my $FLAG=0;
     my $ERROR        = '';
     if (!-x $SQUID_CP) {
@@ -196,7 +196,7 @@ sub copy_log{
 return $FLAG
 }
 sub perm_log{
-    my $SQUID_PR = '../../Tools/bin/squid_perm';
+    my $SQUID_PR = '/Tools/bin/squid_perm';
     my $FLAG=0;
     my $ERROR        = '';
     if (!-x $SQUID_PR) {
@@ -219,7 +219,7 @@ return $FLAG
 }
 sub delete_log{
 
-    my $SQUID_DL = '../../Tools/bin/squid_delete';
+    my $SQUID_DL = '/Tools/bin/squid_delete';
     my $FLAG=0;
     my $ERROR        = '';
     if (!-x $SQUID_DL) {
@@ -254,7 +254,7 @@ sub get_size{
 }
 
 sub squid_exe{
-    my $BINARY = '../../Tools/bin/squid_executor';
+    my $BINARY = '/Tools/bin/squid_executor';
     print qq(Content-type: text/html \n\n);
     my $ERROR        = '';
     my $msg;
@@ -275,7 +275,7 @@ sub squid_exe{
 }
 
 sub iptables_exe{
-    my $BINARY = '../../Tools/bin/iptables_executor';
+    my $BINARY = '/Tools/bin/iptables_executor';
     print qq(Content-type: text/html \n\n);
     my $ERROR        = '';
     my $msg;

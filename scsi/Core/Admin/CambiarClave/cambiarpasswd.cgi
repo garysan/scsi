@@ -8,7 +8,7 @@ use usuarios;
 
 my $usuario = &validate;
 
-my $dbh = DBI->connect( "dbi:mysql:scsi", "scsi", "scsi") or 
+my $dbh = DBI->connect( "dbi:mysql:$config::database","$config::userbase", "$config::passbase") or 
     &dberror("Error en la Base de datos: $DBI::errstr");
     
 my $username = $usuario;

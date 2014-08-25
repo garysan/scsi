@@ -28,14 +28,15 @@ my $fixmo  = $mon + 1;
 my $tz = $isdst == 1 ? "CDT" : "CST";
 my $yr2 = substr( $longyr, 2, 2 );
 ##############Fin de la Hora.
-our $dbh = DBI->connect( "dbi:mysql:scsi", "scsi", "scsi") or 
+our $dbh = DBI->connect( "dbi:mysql:$config::database","$config::userbase", "$config::passbase") or 
     &dberror("Imposible conectar a la BD:\n $DBI::errstr");
 
 my $username = param('usuario');
 my $realname = param('nombre');
 my $email    = param('email');
 my $rol      = param('rol');
-my $password = param('password');
+my $randpass = &random_password();
+my $encpass  = &encrypt($randpass);
 my $rolvalue;
 my $rolname;
 
@@ -78,7 +79,7 @@ $insert = "
 	'$realname',
 	'$email',
 	'$rolvalue',
-	MD5('$password'),
+	MD5('$encpass'),
 	'1',
 	'gsandi',
 	'$horatoday',
@@ -109,7 +110,7 @@ Rol de acceso:
 $rolname 
 
 Clave de Acceso:
-'$password'
+'$encpass'
 
 Para ingresar ingrese a: 
 http://$config::ipsystem/

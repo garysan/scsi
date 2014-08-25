@@ -18,6 +18,8 @@ our @EXPORT = qw($dbh
                     box
                     newfile
                     adlog
+                    encrypt
+                    random_password
                     );
 our @EXPORT_OK = qw();
 
@@ -26,7 +28,7 @@ use CGI qw(:standard);
 
 my $cookie="";
 
-our $dbh = DBI->connect( "dbi:mysql:scsi","scsi", "scsi") or 
+our $dbh = DBI->connect( "dbi:mysql:$config::database","$config::userbase", "$config::passbase") or 
     &vererror("Imposible conectar a la BD:\n $DBI::errstr");
 
 sub printmsg{
@@ -214,5 +216,29 @@ my $user=$_[1];
        
       $sth->execute() or &dberror;
 }
+
+
+
+sub encrypt {
+    my($plain) = @_;
+    my(@salt) = ('a'..'z', 'A'..'Z', '0'..'9', '.', '/');
+    return crypt($plain, $salt[int(rand(@salt))] . $salt[int(rand(@salt))] 	);
+}
+
+
+sub random_password {
+    my($length) = @_;
+    if ($length eq "" or $length < 3) {
+        $length = 6;            #Mas de 6 caracteres.
+    }
+    my @letters = ('a'..'z', 'A'..'Z', '0'..'9');
+    my $randpass = "";
+    foreach my $i (0..$length-1) {
+      $randpass .= $letters[int(rand(@letters))];
+    }
+    return $randpass;
+}
+
+
 
 1;
