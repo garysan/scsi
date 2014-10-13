@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
+CREATE DATABASE  IF NOT EXISTS `scsi` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `scsi`;
+-- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: scsi
+-- Host: 190.129.12.60    Database: scsi
 -- ------------------------------------------------------
--- Server version	5.5.31-0+wheezy1
+-- Server version	5.5.37-0+wheezy1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,26 +18,63 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `adlog`
+-- Table structure for table `mdlos`
 --
 
-DROP TABLE IF EXISTS `adlog`;
+DROP TABLE IF EXISTS `mdlos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `adlog` (
-  `adlognlog` int(11) NOT NULL AUTO_INCREMENT,
-  `adlogdesc` varchar(45) NOT NULL,
-  `adloguser` varchar(15) NOT NULL,
-  `adlogfpro` date NOT NULL,
-  `adloghora` varchar(8) NOT NULL,
-  PRIMARY KEY (`adlognlog`),
-  UNIQUE KEY `adlognlog_UNIQUE` (`adlognlog`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+CREATE TABLE `mdlos` (
+  `mdlosnmod` int(11) NOT NULL AUTO_INCREMENT,
+  `mdlosnomb` varchar(10) NOT NULL,
+  `mdlosdesc` varchar(100) NOT NULL,
+  `mdlosstat` int(1) NOT NULL,
+  `mdlosuser` varchar(15) NOT NULL,
+  `mdlosfreg` date DEFAULT NULL,
+  `mdlosfpro` date DEFAULT NULL,
+  `mdloshora` varchar(8) DEFAULT NULL,
+  `mdlosmrcb` smallint(1) DEFAULT NULL,
+  PRIMARY KEY (`mdlosnmod`),
+  UNIQUE KEY `mdlosnmod_UNIQUE` (`mdlosnmod`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `adlog`
+-- Dumping data for table `mdlos`
 --
+
+LOCK TABLES `mdlos` WRITE;
+/*!40000 ALTER TABLE `mdlos` DISABLE KEYS */;
+INSERT INTO `mdlos` VALUES (1,'Squid','Squid Module',1,'gsa','2013-03-21','2013-03-21',' 0:5:8 ',0),(15,'IPTables','IPTables',1,'gsa','2013-04-18','2013-04-18',' 21:23:7',9),(16,'SquidGuard','SquidGuard',1,'gsa','2013-04-18','2013-04-18',' 22:6:16',0);
+/*!40000 ALTER TABLE `mdlos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `scmop`
+--
+
+DROP TABLE IF EXISTS `scmop`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scmop` (
+  `scmopnmod` decimal(2,0) DEFAULT NULL,
+  `scmopcorr` decimal(2,0) DEFAULT NULL,
+  `scmopusrn` char(3) DEFAULT NULL,
+  `scmopfpro` date DEFAULT NULL,
+  `scmophora` char(8) DEFAULT NULL,
+  `scmopuser` varchar(15) DEFAULT NULL,
+  `scmopmrcb` smallint(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scmop`
+--
+
+LOCK TABLES `scmop` WRITE;
+/*!40000 ALTER TABLE `scmop` DISABLE KEYS */;
+/*!40000 ALTER TABLE `scmop` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `adusr`
@@ -69,8 +108,32 @@ CREATE TABLE `adusr` (
 
 LOCK TABLES `adusr` WRITE;
 /*!40000 ALTER TABLE `adusr` DISABLE KEYS */;
-INSERT INTO `adusr` VALUES ('admin','Administrador','admin@scsi',1,'d02a1c7defa7f13792975edc1204bd99',1,'admin','23:50:5','2013-09-17','2013-11-28','9:2:10','2013-09-17',0);
+INSERT INTO `adusr` VALUES ('gsandi','Gary Sandi Vigabriel','gary.gsv@gmail.com',1,'0a6fe8913ee5003a0dc95177934a1a8f',1,'gsandi',' 22:28:9','2014-08-24','2014-09-13','16:11:47','2014-08-24',0);
 /*!40000 ALTER TABLE `adusr` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `scmod`
+--
+
+DROP TABLE IF EXISTS `scmod`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scmod` (
+  `scmodnmod` decimal(2,0) DEFAULT NULL,
+  `scmoddesc` char(35) DEFAULT NULL,
+  `scmodstat` decimal(1,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scmod`
+--
+
+LOCK TABLES `scmod` WRITE;
+/*!40000 ALTER TABLE `scmod` DISABLE KEYS */;
+INSERT INTO `scmod` VALUES (1,'Administrador',0),(2,'Squid',0),(3,'SquidGuard',0),(4,'Monitoreo',0),(5,'IPTables',0),(6,'Reportes',0);
+/*!40000 ALTER TABLE `scmod` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -94,10 +157,48 @@ CREATE TABLE `cookie` (
 -- Dumping data for table `cookie`
 --
 
-LOCK TABLES `cookie` WRITE;
-/*!40000 ALTER TABLE `cookie` DISABLE KEYS */;
-INSERT INTO `cookie` VALUES ('rfIeZAlzoyoVgr93jIdQKgM9fzw4rsFF','fsandi','2013-11-27','190.129.12.210');
-/*!40000 ALTER TABLE `cookie` ENABLE KEYS */;
+--
+-- Table structure for table `adlog`
+--
+
+DROP TABLE IF EXISTS `adlog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `adlog` (
+  `adlognlog` int(11) NOT NULL AUTO_INCREMENT,
+  `adlogdesc` varchar(45) NOT NULL,
+  `adloguser` varchar(15) NOT NULL,
+  `adlogfpro` date NOT NULL,
+  `adloghora` varchar(8) NOT NULL,
+  PRIMARY KEY (`adlognlog`),
+  UNIQUE KEY `adlognlog_UNIQUE` (`adlognlog`)
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `scmdt`
+--
+
+DROP TABLE IF EXISTS `scmdt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scmdt` (
+  `scmdtnmod` decimal(2,0) DEFAULT NULL,
+  `scmdtcorr` decimal(2,0) DEFAULT NULL,
+  `scmdtdesc` char(35) DEFAULT NULL,
+  `scmdtruta` char(100) DEFAULT NULL,
+  `scmdtstat` decimal(1,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scmdt`
+--
+
+LOCK TABLES `scmdt` WRITE;
+/*!40000 ALTER TABLE `scmdt` DISABLE KEYS */;
+INSERT INTO `scmdt` VALUES (1,1,'Registrar Usuarios','Core/Admin/RegistrarUsuario/',0),(1,2,'Recuperar Clave','Core/Admin/RecuperarClave/',0),(1,3,'Adm. Modulos','Core/Admin/Menu/',0),(2,1,'Adm. Listas','Modulos/Squid/squid_administrar_listas.cgi',0),(2,2,'Adm.Bloqueo','Modulos/Squid/squid_bloqueo.cgi',0),(2,3,'Man.Delay','Modulos/Squid/squid_delay_pools.cgi',0),(2,4,'General','Modulos/Squid/squid_general.cgi',0),(2,5,'Config. Manual','Modulos/Squid/squid_general_m.cgi?filename=/etc/squid/squid.conf',0),(2,6,'Listas IP','Modulos/Squid/squid_lista_ips.cgi',0),(2,7,'Param. SquidGuard','Modulos/Squid/squid_squidguard.cgi',9),(3,1,'IP Administradores','Modulos/SquidGuard/squidguard_admin_ip.cgi',0),(3,2,'Param. General','Modulos/SquidGuard/squidguard_general.cgi',0),(3,3,'Config. Manual','Modulos/SquidGuard/squidguard_general_m.cgi?filename=/etc/squid/squidGuard.conf',0),(4,1,'Monitoreo','Modulos/Graph',0),(4,2,'Frecuentes','Modulos/Graph/frecuentes.cgi',0),(4,3,'Consumo por IP','Modulos/Graph/banda.cgi',0),(5,1,'Parametros','Modulos/IPTables/iptables_param.cgi',0),(5,2,'Bloqueo HTTPS','Modulos/IPTables/iptables_https.cgi',0),(6,1,'Reporte de usuarios','Modulos/Reportes/usuarios1.cgi',0),(1,4,'Alta/Baja Usuarios','Core/Admin/AltaBaja/',0),(6,2,'General del Logs','Modulos/Reportes/log.cgi',0),(6,3,'Usuarios Inactivos','Modulos/Reportes/usuarios9.cgi',0),(6,4,'Excepciones HTTPS','Modulos/Reportes/ips_https.cgi',0),(6,5,'Dominios bloqueados HTTPS','Modulos/Reportes/dom_https.cgi',0),(6,6,'Sitios Frecuentes','Modulos/Reportes/sitios_frecuentes.cgi',0),(6,7,'Consupo por IP','Modulos/Reportes/consumoip.cgi',0),(6,8,'Excepciones SquidGuard','Modulos/Reportes/admin_squidguard.cgi',0),(4,4,'Dato','dato',0);
+/*!40000 ALTER TABLE `scmdt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -112,7 +213,7 @@ CREATE TABLE `grupo` (
   `grupodesc` varchar(100) NOT NULL,
   `grupouplo` decimal(10,2) NOT NULL,
   `grupodown` decimal(10,2) NOT NULL,
-  `grupouser` varchar(3) NOT NULL,
+  `grupouser` varchar(15) NOT NULL,
   `grupofreg` date DEFAULT NULL,
   `grupofpro` date DEFAULT NULL,
   `grupohora` varchar(8) DEFAULT NULL,
@@ -163,115 +264,6 @@ LOCK TABLES `lista` WRITE;
 /*!40000 ALTER TABLE `lista` DISABLE KEYS */;
 /*!40000 ALTER TABLE `lista` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `mdlos`
---
-
-DROP TABLE IF EXISTS `mdlos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mdlos` (
-  `mdlosnmod` int(11) NOT NULL AUTO_INCREMENT,
-  `mdlosnomb` varchar(10) NOT NULL,
-  `mdlosdesc` varchar(100) NOT NULL,
-  `mdlosstat` int(1) NOT NULL,
-  `mdlosuser` varchar(15) NOT NULL,
-  `mdlosfreg` date DEFAULT NULL,
-  `mdlosfpro` date DEFAULT NULL,
-  `mdloshora` varchar(8) DEFAULT NULL,
-  `mdlosmrcb` smallint(1) DEFAULT NULL,
-  PRIMARY KEY (`mdlosnmod`),
-  UNIQUE KEY `mdlosnmod_UNIQUE` (`mdlosnmod`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `mdlos`
---
-
-LOCK TABLES `mdlos` WRITE;
-/*!40000 ALTER TABLE `mdlos` DISABLE KEYS */;
-INSERT INTO `mdlos` VALUES (1,'Squid','Squid Module',1,'gsa','2013-03-21','2013-03-21',' 0:5:8 ',0),(15,'IPTables','IPTables',1,'gsa','2013-04-18','2013-04-18',' 21:23:7',9),(16,'SquidGuard','SquidGuard',1,'gsa','2013-04-18','2013-04-18',' 22:6:16',0);
-/*!40000 ALTER TABLE `mdlos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `scmdt`
---
-
-DROP TABLE IF EXISTS `scmdt`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `scmdt` (
-  `scmdtnmod` decimal(2,0) DEFAULT NULL,
-  `scmdtcorr` decimal(2,0) DEFAULT NULL,
-  `scmdtdesc` char(35) DEFAULT NULL,
-  `scmdtruta` char(100) DEFAULT NULL,
-  `scmdtstat` decimal(1,0) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `scmdt`
---
-
-LOCK TABLES `scmdt` WRITE;
-/*!40000 ALTER TABLE `scmdt` DISABLE KEYS */;
-INSERT INTO `scmdt` VALUES (1,1,'Registrar Usuarios','Core/Admin/RegistrarUsuario/',0),(1,2,'Recuperar Clave','Core/Admin/RecuperarClave/',0),(1,3,'Adm. Modulos','Core/Admin/Menu/',0),(2,1,'Adm. Listas','Modulos/Squid/squid_administrar_listas.cgi',0),(2,2,'Adm.Bloqueo','Modulos/Squid/squid_bloqueo.cgi',0),(2,3,'Man.Delay','Modulos/Squid/squid_delay_pools.cgi',0),(2,4,'General','Modulos/Squid/squid_general.cgi',0),(2,5,'Config. Manual','Modulos/Squid/squid_general_m.cgi?filename=/etc/squid/squid.conf',0),(2,6,'Listas IP','Modulos/Squid/squid_lista_ips.cgi',0),(2,7,'Param. SquidGuard','Modulos/Squid/squid_squidguard.cgi',9),(3,1,'IP Administradores','Modulos/SquidGuard/squidguard_admin_ip.cgi',0),(3,2,'Param. General','Modulos/SquidGuard/squidguard_general.cgi',0),(3,3,'Config. Manual','Modulos/SquidGuard/squidguard_general_m.cgi?filename=/etc/squid/squidGuard.conf',0),(4,1,'Monitoreo','Modulos/Graph',0),(4,2,'Frecuentes','Modulos/Graph/frecuentes.cgi',0),(4,3,'Consumo por IP','Modulos/Graph/banda.cgi',0),(5,1,'Parametros','Modulos/IPTables/iptables_param.cgi',0),(5,2,'Bloqueo HTTPS','Modulos/IPTables/iptables_https.cgi',0),(6,1,'Reporte de usuarios','Modulos/Reportes/usuarios1.cgi',0),(1,4,'Alta/Baja Usuarios','Core/Admin/AltaBaja/',0),(6,2,'General del Logs','Modulos/Reportes/log.cgi',0),(6,3,'Usuarios Inactivos','Modulos/Reportes/usuarios9.cgi',0),(6,4,'Excepciones HTTPS','Modulos/Reportes/ips_https.cgi',0),(6,5,'Dominios bloqueados HTTPS','Modulos/Reportes/dom_https.cgi',0),(6,6,'Sitios Frecuentes','Modulos/Reportes/sitios_frecuentes.cgi',0),(6,7,'Consupo por IP','Modulos/Reportes/consumoip.cgi',0),(6,8,'Excepciones SquidGuard','Modulos/Reportes/admin_squidguard.cgi',0);
-/*!40000 ALTER TABLE `scmdt` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `scmod`
---
-
-DROP TABLE IF EXISTS `scmod`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `scmod` (
-  `scmodnmod` decimal(2,0) DEFAULT NULL,
-  `scmoddesc` char(35) DEFAULT NULL,
-  `scmodstat` decimal(1,0) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `scmod`
---
-
-LOCK TABLES `scmod` WRITE;
-/*!40000 ALTER TABLE `scmod` DISABLE KEYS */;
-INSERT INTO `scmod` VALUES (1,'Administrador',0),(2,'Squid',0),(3,'SquidGuard',0),(4,'Monitoreo',0),(5,'IPTables',0),(6,'Reportes',0);
-/*!40000 ALTER TABLE `scmod` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `scmop`
---
-
-DROP TABLE IF EXISTS `scmop`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `scmop` (
-  `scmopnmod` decimal(2,0) DEFAULT NULL,
-  `scmopcorr` decimal(2,0) DEFAULT NULL,
-  `scmopusrn` char(3) DEFAULT NULL,
-  `scmopfpro` date DEFAULT NULL,
-  `scmophora` char(8) DEFAULT NULL,
-  `scmopuser` varchar(15) DEFAULT NULL,
-  `scmopmrcb` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `scmop`
---
-
-LOCK TABLES `scmop` WRITE;
-/*!40000 ALTER TABLE `scmop` DISABLE KEYS */;
-/*!40000 ALTER TABLE `scmop` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -282,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-28 18:05:12
+-- Dump completed on 2014-10-13 19:14:31
