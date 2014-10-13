@@ -16,11 +16,7 @@ Requerimientos:
 Puede instalarse de la siguiente forma:
     apt-get install bind9 libpdf-table-perl libapache2-mod-perl2  libmime-lite-perl sendmail-bin libemail-valid-perl libjson-any-perl mysql-server-5.5
 
-Opcional:
-	- squidguard
-          apt-get install squidguard
-
-=====================INSTALAR SQUIDGUARD====================
+=====================INSTALAR SQUIDGUARD (OPCIONAL)==========
 
 1. apt-get install squidguad
 2. crear la base de datos de listas negras
