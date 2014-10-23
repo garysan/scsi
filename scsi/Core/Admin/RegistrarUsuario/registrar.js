@@ -3,48 +3,41 @@ $(document).ready(function(){
         $("#nombre").convertUpper(6,20);
 
     $("#registrar").click(function(){
-    	registrar();
+        registrar();
     });
     $(document).keypress(function(e) {
-        if(e.which == 13) {
+        if(e.which === 13) {
         registrar();
         }	
     });
 });
 function registrar(){
-    if (usuario.length!=0){
-      $.ajax({
+    var usuario=$("#usuario").val();
+    var nombre =$("#nombre").val();
+    var email  =$("#email").val();
+    var rol    =$("#rol").val();
+    
+    if (usuario.length!==0 && nombre.length!==0 && email.length!==0){
+       $("#resultado").html("<b>Procesando... Espere por favor.</b>");
+       $.ajax({ 
         type: "POST",
-        url: "registrar.cgi",
-        async: false,
-        data:{	usuario:$("#usuario").val(),
-        		nombre:$("#nombre").val(),
-        		email:$("#email").val(),
-        		rol:$("#rol").val()
-        		},
+        url : "registrar.cgi",
+        data: {usuario:usuario,nombre:nombre,email:email,rol:rol},
         success: function(msg){
-        	$("#resultado").fadeIn(0);
-            $("#resultado").html(msg);
-            $('#usuario').focus();
+            $("#resultado").html(msg).fadeIn(0);
+            /////Recargar
         },
         error: function(){
-        	$("#resultado").fadeIn(0);
-            $("#resultado").html(msg);
+            $("#resultado").fadeIn(0);
+            $("#resultado").html("<b>Error, verifique los campos requeridos.</b>").fadeOut(3000);
             $('#usuario').focus();
         }
-      }); // ajax
-      
+        });  
+       
     } // if
     else{
          $("#resultado").fadeIn(0);
-         $("#resultado").html("<b>Error, verifique los campos requeridos.</b>");
-         $("#resultado").fadeOut(3000);
-         if (usrn.length==""){
-             $('#usuario').focus();
-         }
-         if (clave.length==""){
-             $('#clave').focus();
-         }		        	    
+         $("#resultado").html("<b>Error, verifique los campos requeridos.</b>").fadeOut(3000);   
     }
 }
 

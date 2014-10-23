@@ -3,10 +3,10 @@ $(document).ready(function(){
     //	alert($("#new1").val());
     //});
 	 $("#form1").submit(function(){
+             $("#resultado").html("<b>Procesando... Espere por favor.</b>");
 		 $.ajax({
 		      type: "POST",
 		      url: "../../Tools/save.cgi",
-		      async: false,
 		      data: $(this).serialize(),
 		      success: function(msg){
 		      	$("#resultado").fadeIn(0);
@@ -20,11 +20,10 @@ $(document).ready(function(){
 		    return false;
 		  });
 	 $("#form1m").submit(function(){
-             alert("XXXX");
+             $("#resultado").html("<b>Procesando... Espere por favor.</b>");
 		 $.ajax({
 		      type: "POST",
 		      url: "../../Tools/savem.cgi",
-		      async: false,
 		      data: $(this).serialize(),
 		      success: function(msg){
 		      	$("#resultado").fadeIn(0);
@@ -111,10 +110,10 @@ function parser(id,tag){
 function save(ant,nue,arch){
 	var original=ant.trim();
 	var nuevo=nue.trim();
-      $.ajax({
+    $("#resultado").html("<b>Procesando... Espere por favor.</b>");
+    $.ajax({
         type: "POST",
         url: "squid_guardar_lista.cgi",
-        async: false,
         data:{original:original,nuevo:nuevo,arch:arch},
         success: function(msg){
         	$("#resultado").fadeIn(0);

@@ -18,17 +18,12 @@ my $cnue = param('nueva');
 my $ccla = param('cnueva');
 
 my $sth = $dbh->prepare("SELECT adusrmail FROM adusr WHERE adusrusrn='$usuario' AND adusrclav=MD5('$cant') ") or &dberror;
-#$sth->trace( 3, '/tmp/rp.txt' );
 $sth->execute;
 
 if($email = $sth->fetchrow_array){
-		###Procesar
-		# Almacenar en la base de datos
         $sth = $dbh->prepare("UPDATE adusr SET adusrclav=MD5(?) WHERE adusrusrn=?")  or &dberror;
-        #$sth->trace( 3, '/tmp/fg.txt' );
         $sth->execute($cnue, $username) or &dberror;
         &adlog("El usuario $user cambio la clave de acceso.",$user);
-        # Enviar el correo con el password sin encriptar
         $ENV{PATH} = "/usr/sbin";
         open(MAIL,"|/usr/sbin/sendmail -t -oi");
         print MAIL "To: $email\n";

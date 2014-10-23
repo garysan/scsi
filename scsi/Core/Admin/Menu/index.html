@@ -27,7 +27,7 @@
     
   <body>
     <div id="formulario">
-           <legend>Archivo</legend>
+           <legend>Editar modulos e item's disponibles:</legend>
            
             <table>
 			<tr>
@@ -75,27 +75,29 @@
         	</tr>
         	</table>
     </div>
-    <div id="dialog-form" title="Descripcion">
-    <form>
-	<fieldset>
-	<label for="valor">Descripcion</label>
-	<input type="text" name="valor" id="valor" class="text ui-widget-content ui-corner-all" />
-	</fieldset>
-	</form>
-	</div>
-          
-    <div id="dialog-form-sub" title="SubMenu">
-    <form>
-	<fieldset>
-	<label for="desc">Nombre</label>
-	<input type="text" name="desc" id="desc" class="text ui-widget-content ui-corner-all" />
+      
+    <form id="addModulo" method="POST" >
+        <text>Registro de un nuevo módulo:</text>
         <br/>
-        <label for="ruta">Ruta</label>
+        <br/>
+        <label>Descripción del módulo:</label>
+        <input type="text" name="valor" id="valor" class="text ui-widget-content ui-corner-all" />
+        <br/>
+        <div id="resultado"></div>
+    </form>  
+      
+    <form id="addItem" method="POST" >
+        <text>Registro de un nuevo item:</text>
+        <br/>
+        <br/>
+        <label>Nombre del item:</label>
+        <input type="text" name="desc" id="desc" class="text ui-widget-content ui-corner-all" />
+        <br/>
+        <br/>
+        <label>Ruta:</label>
         <input type="text" name="ruta" id="ruta" class="text ui-widget-content ui-corner-all" />
-	</fieldset>
-            
-	</form>
-	</div>
-	 
+        <br/>
+        <div id="resultado"></div>
+    </form>  
   </body>
 </html>

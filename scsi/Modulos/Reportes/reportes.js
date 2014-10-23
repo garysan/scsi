@@ -9,10 +9,10 @@ function save(ant,nue,arch){
 	var original=ant.trim();
 	var nuevo=nue.trim();
         var flag=0;
-      $.ajax({
+    $("#resultado").html("<b>Procesando... Espere por favor.</b>");
+    $.ajax({
         type: "POST",
         url: "iptables_save.cgi",
-        async: false,
         data:{flag:flag,original:original,nuevo:nuevo,arch:arch},
         success: function(msg){
             $("#resultado").fadeIn(0);
@@ -23,7 +23,7 @@ function save(ant,nue,arch){
             $("#resultado").html(msg).fadeOut(3000);
             
         }
-      }); // ajax
+    }); // ajax
 }
 
 function adicionar(tag,val){
@@ -80,10 +80,10 @@ function quitar_url(i,ip){
 
 function apply(){
       var flag=1;
+      $("#resultado").html("<b>Procesando... Espere por favor.</b>");
       $.ajax({
         type: "POST",
         url: "iptables_save.cgi",
-        async: false,
         data:{flag:flag},
         success: function(msg){
         	$("#resultado").fadeIn(0);

@@ -7,7 +7,6 @@ use lib '../../../Config';
 use usuarios;
 use Switch;
 
-#my $usuario = &validate;
 my $usuario = &validate;
 my $cadena;
 my $val  = param('flag');

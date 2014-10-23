@@ -44,21 +44,16 @@ my $fechatoday=("$longyr/$fixmo/$mday");
 my $horatoday =(" $hr:$min:$sec ");
 
 # Set rol value
-if ("$rol" eq "")
-{
+if ("$rol" eq ""){
     $rolvalue=0;
 }
-else
-{
-    if("$rol" eq "admin")
-    {
+else{
+    if("$rol" eq "admin"){
         $rolvalue=1;
         $rolname="Administrador";
     }
-    else
-    {
-        if("$rol" eq "super")
-        {
+    else{
+        if("$rol" eq "super"){
             $rolvalue=2;
             $rolname="Supervisor";            
         }

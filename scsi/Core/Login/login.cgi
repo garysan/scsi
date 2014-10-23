@@ -17,11 +17,9 @@ $sth->execute;
 if($usuario = $sth->fetchrow_array){
     
     my $cookie_id = &random_id;
-    #my $cookie = cookie(-name=>'cid', -value=>$cookie_id, -expires=>'+$config::cookielife');
     my $cookie = cookie(-name=>'cid',  value=>$cookie_id, -expires=>'+1y');
     $sth = $dbh->prepare("INSERT INTO cookie VALUES(?, ?, current_timestamp(), ?)") or &dberror;
     $sth->execute($cookie_id, $user, $ENV{REMOTE_ADDR}) or &dberror;
-    #&mensaje($cookie);
     if (param('page')) {
        my $url = param('page');
        print redirect(-location=>"http://$config::ipsystem/$url", -cookie=>$cookie);

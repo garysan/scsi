@@ -10,36 +10,33 @@ $(document).ready(function(){
     });
 });
 function cambiar(){    
-    if (	$("#ant").val().length!=0 && 
-    		$("#nueva").val().length!=0 &&
-    		$("#cnueva").val().length!=0){
-    	 if ($("#nueva").val()!=$("#cnueva").val()){
-             $("#resultado").html("<b>Las claves no coinciden.</b>").fadeOut(3000);
-             $("#nueva").val('');
-         	 $("#cnueva").val('');
-         	 $("#nueva").focus();
-         }
-    	 else{
-      $.ajax({
-        type: "POST",
-        url: "cambiarpasswd.cgi",
-        async: false,
-        data:{	ant:$("#ant").val(),
-        		nueva:$("#nueva").val(),
-        		cnueva:$("#cnueva").val()
-        		},
-        success: function(msg){
-        	$("#resultado").fadeIn(0);
-        	$("#resultado").html(msg).fadeOut(3000);
-            $('#correo').focus();
-        },
-        error: function(){
-        	$("#resultado").fadeIn(0);
-            $("#resultado").html(msg).fadeOut(3000);
-            $('#correo').focus();
+    if ($("#ant").val().length!=0 && 
+    	$("#nueva").val().length!=0 &&
+    	$("#cnueva").val().length!=0){
+    	if ($("#nueva").val()!=$("#cnueva").val()){
+            $("#resultado").html("<b>Las claves no coinciden.</b>").fadeOut(3000);
+            $("#nueva").val('');
+            $("#cnueva").val('');
+            $("#nueva").focus();
         }
-      }); // ajax
-    }
+        else{
+            $("#resultado").html("<b>Procesando... Espere por favor.</b>");
+            $.ajax({
+            type: "POST",
+            url: "cambiarpasswd.cgi",
+            data:{ant:$("#ant").val(),nueva:$("#nueva").val(),cnueva:$("#cnueva").val()},
+            success: function(msg){
+                    $("#resultado").fadeIn(0);
+                    $("#resultado").html(msg).fadeOut(3000);
+                $('#correo').focus();
+            },
+            error: function(){
+                    $("#resultado").fadeIn(0);
+                $("#resultado").html(msg).fadeOut(3000);
+                $('#correo').focus();
+            }
+            }); // ajax
+        }
     } // if
     else{
          $("#resultado").fadeIn(0);

@@ -8,12 +8,12 @@ $(document).ready(function(){
 
 //////////Principal de guardado
 function save(ant,nue,arch){
-	var original=ant.trim();
-	var nuevo=nue.trim();
-      $.ajax({
+    var original=ant.trim();
+    var nuevo=nue.trim();
+    $("#resultado").html("<b>Procesando... Espere por favor.</b>");
+    $.ajax({
         type: "POST",
         url: "squidguard_save.cgi",
-        async: false,
         data:{
         	  original:original,
         	  nuevo:nuevo,

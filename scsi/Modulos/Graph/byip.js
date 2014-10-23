@@ -22,7 +22,6 @@ function consultar(ip){
       $.ajax({
         type: "POST",
         url: "byip.cgi",
-        async: false,
         data:{ip:ip},
         success: function(msg){
         	$("#resultado").html(msg);

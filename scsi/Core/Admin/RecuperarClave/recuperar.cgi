@@ -26,9 +26,7 @@ if (my $uinfo = $sth->fetchrow_hashref) {
     my $randpass = &random_password();
     my $encpass = &encrypt($randpass);
     $sth = $dbh->prepare("UPDATE adusr SET adusrclav=MD5(?) WHERE adusrusrn=?")  or &dberror;
-    #$sth->trace( 3, '/tmp/fg.txt' );
     $sth->execute($encpass, $username) or &dberror;
-    # Enviar el correo con el password sin encriptar
     $ENV{PATH} = "/usr/sbin";
     open(MAIL,"|/usr/sbin/sendmail -t -oi");
     print MAIL "To: $email\n";

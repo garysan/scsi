@@ -1,29 +1,71 @@
 $(document).ready(function(){
-	$("#botones").hide();
-	flag=0;
-	cargar_select(flag);
-	$('#modulo').change(function() {
-        var selectVal = $('#modulo :selected').attr('id');
-        $('#item').empty();
-        $("#showruta").val("Menu principal sin ruta");
-        if (selectVal == "adnmod"){
-            registrar_menu();  
-        }
-        else{       
-            cargarLista(selectVal);
-        }
-    });
-	
-	$('#item').change(function() {
-        var nmod = $('#modulo :selected').attr('id');
-        var item = $('#item :selected').attr('id');
-
-        if (item == "adnite"){
-           registrar_item();
+    $('#addModulo').hide();
+    $('#addItem').hide();
+    $("#botones").hide();
+    flag=0;
+    
+    cargar_select(flag);
+    
+    $('#modulo').change(function() {
+    var selectVal = $('#modulo :selected').attr('id');
+    $('#item').empty();
+    $("#showruta").val("Menu principal sin ruta");
+    if (selectVal === "adnmod"){
+        $('#valor').focus();
+        $("#addModulo").submit(function( event ) {
+        if ($("#addModulo").find('input[name="valor"]').val()!=""){
+             procesar(2,$("#addModulo").find('input[name="valor"]').val());
+             $(this).dialog("close");
         }
         else{
-            cargarRuta(nmod,item);
+            $("#resultado").text("Hey! no introdujo un valor.");
+            $("#valor").val('');
+            $("#valor").focus();
         }
+        event.preventDefault();
+        });
+        $("#addModulo").dialog({
+            modal:true,
+            open: function() {
+                $( this ).find( "[type=submit]" ).hide();
+            }
+        });    
+    }
+    else{       
+        cargarLista(selectVal);
+    }
+    });
+	
+    $('#item').change(function() {
+    var nmod = $('#modulo :selected').attr('id');
+    var item = $('#item :selected').attr('id');
+    var dialog, form;
+    if (item === "adnite"){
+        dialog = $("#addItem").dialog({
+            modal: true,
+            autoOpen: false,
+            buttons: {
+                "Registrar": function(){
+                    var desc = $("#desc");
+                    var ruta = $("#ruta");
+                    procesar_item(3,desc.val(),ruta.val());  
+                    $(this).dialog("close");
+                },
+                "Cancelar": function() {
+                    $(this).dialog("close");
+                }
+            }
+        });  
+        
+        dialog.dialog( "open" );
+        
+        form = dialog.find("#addItem").on( "submit", function( event ) {
+        event.preventDefault();
+    });
+    }
+    else{
+        cargarRuta(nmod,item);
+    }
     });
     $('#update').click(function(){
         var nmod = $('#modulo :selected').attr('id');
@@ -40,7 +82,6 @@ $(document).ready(function(){
 });
 
 function update(flag,nmod,item,ruta){
-
     $.ajax({ 
         type: "POST",
         url: "menu.cgi",
@@ -58,7 +99,6 @@ function update(flag,nmod,item,ruta){
      });  
 }  
 function baja(flag,nmod,item){
-
     $.ajax({ 
         type: "POST",
         url: "menu.cgi",
@@ -74,17 +114,6 @@ function baja(flag,nmod,item){
         }
      });  
 }  
-
-var flag;
-function registrar_menu(){
-    flag=2;
-    $( "#dialog-form" ).dialog( "open" );
-}
-
-function registrar_item(){
-    flag=3;
-    $( "#dialog-form-sub" ).dialog( "open" );
-}
 
 //////Funciones Extra
 
@@ -182,71 +211,3 @@ function clean(){
     $("#desc").val('');
     $("#nmod").focus();
 }
-
-		    
-$(function() {
-      var valor = $( "#valor" ),
-      allFields = $( [] ).add( valor ),
-      tips = $( ".validateTips" );
-      $( "#dialog-form" ).dialog({
-      autoOpen: false,
-      height: 300,
-      width: 350,
-      draggable:false,
-      resizable:false,
-      modal: true,
-      closeOnEscape:false,
-      buttons: {
-        "Aceptar": function() {
-           if ($("#fin").val()!=""){
-                        procesar(flag,valor.val());
-            	}
-            	else{
-            		alert("No puede quedar vacio");
-            	}
-        		
-        	$( this ).dialog( "close" );
-        },
-        "Cancelar": function() {
-          $( this ).dialog( "close" );
-        }
-      },
-      close: function() {
-        allFields.val( "" ).removeClass( "ui-state-error" );
-      }
-    });
-});
-////////////////////ITEM de MEnu
-$(function() {
-      var desc = $( "#desc" ),
-          ruta = $( "#ruta" ),
-      allFields = $( [] ).add( desc ).add( ruta ),
-      tips = $( ".validateTips" );
-      $( "#dialog-form-sub" ).dialog({
-      autoOpen: false,
-      height: 300,
-      width: 350,
-      draggable:false,
-      resizable:false,
-      modal: true,
-      closeOnEscape:false,
-      buttons: {
-        "Aceptar": function() {
-           if ($("#fin").val()!=""){
-                        procesar_item(flag,desc.val(),ruta.val());
-            	}
-            	else{
-            		alert("No puede quedar vacio");
-            	}
-        		
-        	$( this ).dialog( "close" );
-        },
-        "Cancelar": function() {
-          $( this ).dialog( "close" );
-        }
-      },
-      close: function() {
-        allFields.val( "" ).removeClass( "ui-state-error" );
-      }
-    });
-});

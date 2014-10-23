@@ -15,7 +15,6 @@ function ingresar(){
       $.ajax({
         type: "POST",
         url: "login.cgi",
-        async: false,
         data:{usuario:$("#usuario").val(),password:$("#password").val()},
         success: function(msg){
             $("#resultado").fadeIn(0);
