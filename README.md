@@ -3,8 +3,8 @@ SCSI
 Requerimientos:
 	- Perl
 	- Apache con soporte CGI
-	- Squid
-	- Navegador compatible con frames
+	- Squid o squid3
+	- Navegador WEB
         - libapache2-mod-perl2
         - libmime-lite-perl
         - sendmail o sendmail-bin
@@ -12,11 +12,16 @@ Requerimientos:
         - libjson-any-perl
         - mysql-server-5.5
         - bind9
+        - iptables
 
 Puede instalarse de la siguiente forma:
-    apt-get install bind9 libpdf-table-perl libapache2-mod-perl2  libmime-lite-perl sendmail-bin libemail-valid-perl libjson-any-perl mysql-server-5.5
+    apt-get install bind9 libpdf-table-perl libapache2-mod-perl2 apache2 libmime-lite-perl sendmail-bin libemail-valid-perl libjson-any-perl mysql-server-5.5
 
-=====================INSTALAR SQUIDGUARD (OPCIONAL)==========
+Opcional:
+	- squidguard
+          apt-get install squidguard
+
+=====================INSTALAR SQUIDGUARD====================
 
 1. apt-get install squidguad
 2. crear la base de datos de listas negras
@@ -42,14 +47,15 @@ PROCEDIMIENTO DE INSTALACIÓN SCSI
 	a	
             AddHandler cgi-script .cgi .pl
 	Luego 
+            a2enmod cgi
             service apache2 restart
-
-2.Configurar Apache 2
+            
+2.Configurar Apache 2 
+    a) Debian 6 y 7
 	1. Crear un archivo de apache en /etc/apache2/sites-available/
             o simplemente edite el archivo default
 	2. Archivo con el nombre deseado con el siguiente contenido:
-
-<VirtualHost *:80>
+        <VirtualHost *:80>
         ServerAdmin gary@sandi.com
         DocumentRoot /scsi/scsi
         <Directory />
@@ -72,20 +78,45 @@ PROCEDIMIENTO DE INSTALACIÓN SCSI
         ErrorLog ${APACHE_LOG_DIR}/error.log
         LogLevel warn
         CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
+        </VirtualHost>
+    4. /etc/init.d/apache2 restart
+    
+    b) Debian 8
+        1. Crear un archivo de apache en /etc/apache2/sites-available/
+            o simplemente edite el archivo 000-default.conf
+	2. Archivo con el nombre deseado con el siguiente contenido:
+        <VirtualHost *:80>
+        #ServerName www.example.com
+
+        ServerAdmin gary@sandi-ti.com
+        DocumentRoot /scsi/scsi
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        </VirtualHost>
+
+        3. Edite el archivo /etc/apache2/apache2.conf
+           en la zona de directorios añada:
+            <Directory /scsi/scsi>
+            AllowOverride All
+            Options Indexes FollowSymLinks MultiViews
+            Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+            Order allow,deny
+            Allow from all
+            </Directory>    
+        4. /etc/init.d/apache2 restart
+           
 
 3. Extraer scsi
 	1. Obtenga el src en .tar.gz desde la web del proyecto scsi.sf.net
 	2. Cambiar permisos del directorio:
 		chown www-data:www-data /scsi/scsi -R
-		chmod 770 /home/scsi -R
-
+		chmod 777 /scsi/scsi -R
 
 4. Compilación previa. (Ejecutar como root)
     cd Tools/bin/
     sh RUN_AS_ROOT.sh
 
-5. Base de datos:
+5. Base de datos ingresar con mysql -u root -p :
     Crear usuario con:
 
     CREATE USER scsi@localhost IDENTIFIED BY 'scsi';
@@ -119,4 +150,3 @@ PROCEDIMIENTO DE INSTALACIÓN SCSI
 	
 9. Uso de scsi.
 	1. El uso es intuitivo y simple.
-
