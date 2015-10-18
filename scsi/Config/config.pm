@@ -1,17 +1,25 @@
 package config;
 
 ########Archivos de Configuacion#########
+$squidver= "3";
 $squidbin = "/usr/sbin/squid";
 $squidconf = "/etc/squid/squid.conf";
-$squidguard = "/etc/squid/squidGuard.conf";
-$iptablesconf = "/etc/network/if-up.d/00-firewall";
+$sgbf = "/etc/squid/squidGuard.conf";
+
+$squid3bin = "/usr/sbin/squid3";
+$squid3conf = "/etc/squid3/squid.conf";
+$sgbf3 = "/etc/squid3/squidGuard.conf";
+
+$iptables = "/sbin/iptables";
+$iptablesconf = "/home/scripts/00-firewall.sh";
 $cssfile = "/css/estilo.css";
 $patchdir = "/patchdir";
+$scsiroot = "/scsi/scsi/";
 
-$master = "/etc/squid/master";
-$clientes = "/etc/squid/clientes";
-$internet = "/etc/squid/internet";
-$denegados = "/etc/squid/denegados";
+##$master = "/etc/squid/master";
+##$clientes = "/etc/squid/clientes";
+##$internet = "/etc/squid/internet";
+##$denegados = "/etc/squid/denegados";
 
 ########Parametros de Sistema#########
 $cookielife="1d"; ####Este parametro indica el tiempo de vida del cookie

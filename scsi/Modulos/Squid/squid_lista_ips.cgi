@@ -14,7 +14,12 @@ shared::header ("","squid.js");
 shared::modulo ("Listas de direcciones IP");
 ######### config Area #########
 $origen =~ s/\/scsi//g;
-$squidconf = $config::squidconf;
+if ($config::squidver eq "2"){
+    $squidconf = $config::squidconf;
+}
+if ($config::squidver eq "3"){
+    $squidconf = $config::squid3conf;
+}
 ######################################
 if (!open(SQUIDCONF, "$squidconf")){
 	&box("Error","El archivo $squidconf no existe.");

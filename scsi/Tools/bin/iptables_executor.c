@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#define IPTABLES "/etc/network/if-up.d/00-firewall"
+#define IPTABLES "/home/scripts/00-firewall.sh"
 #define SH "/bin/sh"
 
 int main(int argc, char **argv, char **envp) {

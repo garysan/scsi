@@ -10,10 +10,15 @@ use File::Basename;
 my $usuario = &validate;
 
 shared::header ("","squid.js");
-$filename = $config::squidconf;
 shared::modulo ("$config::msg002");
 ######### config Area #########
-$squidconf = $config::squidconf;
+if ($config::squidver eq "2"){
+    $squidconf = $config::squidconf;
+}
+if ($config::squidver eq "3"){
+    $squidconf = $config::squid3conf;
+}
+$filename = $squidconf;
 ######################################
 if (!open(SQUIDCONF, "$squidconf"))
 {

@@ -8,7 +8,7 @@
     //Caracteres literales aceptados
     var letVal = new Array(65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90);
     //carateres especiales aceptados
-    var carVal = new Array(8,13,33,34,37,38,39,40,46);
+    var carVal = new Array(8,9,13,33,35,37,38,39,40);
     //44 corresponde al ,
     var cmmVal = 44;
     //45 corresponde al -
@@ -17,114 +17,91 @@
     var pntVal = 46;
     //32 corresponde espacio
     var espVal = 32;
+    //34 corresponde "
+    var cmlVal = 34;
+    //10 salto de linea
+    var sltVal = 10;
+    //47 barra / para fecha
+    var braVal = 47;    
     var i;
-    $.fn.convertUpper = function(op,alength) {  
-        //var name = $(this).attr("name");
-        var expReg;
+    $.fn.convertUpperTextArea = function() { 
+        this.convertUpper(10,0);
+    }
+    $.fn.convertUpper = function(op,alength) {
         var permitir = true;
-        var arafVal;
+        var arrayFormatoValor;
+        var arrayFormatoAdcnl = numVal.slice(0, numVal.length);
         switch(op){
             case 0: //solo numeros
-                expReg = /[^0-9]/g;
-                arafVal = numVal; 
+                arrayFormatoValor = arrayFormatoAdcnl;
                 break;
-            case 1: //numeros con descimales 
-                expReg = /[^0-9.]/g;
-                numVal.push(pntVal);
-                arafVal = numVal; 
+            case 1: //numeros con descimales                
+                arrayFormatoAdcnl.push(pntVal);
+                arrayFormatoValor = arrayFormatoAdcnl;
                 break;
             case 2: //numeros y espaciado
-                expReg = /[^0-9 ]/g;
-                numVal.push(espVal);
-                arafVal = numVal; 
+                arrayFormatoAdcnl.push(espVal);
+                arrayFormatoValor = arrayFormatoAdcnl; 
                 break;
             case 3: //letras
-                expReg = /[^a-zA-Z]/g;
-                arafVal = letVal; 
+                arrayFormatoValor = letVal.slice(0, letVal.length); 
                 break;
             case 4: //letras con espaciado
-                expReg = /[^a-zA-Z ]/g;
-                letVal.push(espVal);
-                arafVal = letVal; 
+                arrayFormatoAdcnl = letVal.slice(0, letVal.length); 
+                arrayFormatoAdcnl.push(espVal);
+                arrayFormatoValor = arrayFormatoAdcnl; 
                 break;
-            case 5: 
-                expReg = /[^a-zA-Z0-9]/g;
-                arafVal = numVal.concat(letVal); 
+            case 5: //letras y numeros
+                arrayFormatoValor = arrayFormatoAdcnl.concat(letVal); 
                 break;
-            case 6: 
-                expReg = /[^a-zA-Z0-9 ]/g;
-                letVal.push(espVal);
-                arafVal = numVal.concat(letVal); 
+            case 6: //letras numero y espaciado
+                arrayFormatoAdcnl = arrayFormatoAdcnl.concat(letVal);
+                arrayFormatoAdcnl.push(espVal);
+                arrayFormatoValor = arrayFormatoAdcnl; 
                 break;
             case 7: 
-                expReg = /[^a-zA-Z0-9-]/g;
-                letVal.push(gioVal);
-                arafVal = numVal.concat(letVal); 
+                arrayFormatoAdcnl = arrayFormatoAdcnl.concat(letVal);
+                arrayFormatoAdcnl.push(gioVal);
+                arrayFormatoValor = arrayFormatoAdcnl; 
+                break;                
+            case 8:
+                arrayFormatoAdcnl = arrayFormatoAdcnl.concat(letVal); 
+                arrayFormatoAdcnl.push(espVal);
+                arrayFormatoAdcnl.push(gioVal);
+                arrayFormatoAdcnl.push(cmlVal);
+                arrayFormatoValor = arrayFormatoAdcnl;
+                break;
+            case 10:
+                arrayFormatoAdcnl = arrayFormatoAdcnl.concat(letVal);
+                arrayFormatoAdcnl.push(gioVal);
+                arrayFormatoAdcnl.push(espVal);
+                arrayFormatoAdcnl.push(cmmVal);
+                arrayFormatoAdcnl.push(sltVal);
+                arrayFormatoAdcnl.push(pntVal);
+                arrayFormatoAdcnl.push(braVal);
+                arrayFormatoAdcnl.push(cmlVal);
+                arrayFormatoValor = arrayFormatoAdcnl; 
                 break;
             default: 
-                expReg = /[^a-zA-Z0-9,. ]+/g;
-                letVal.push(espVal);
-                letVal.push(cmmVal);
-                letVal.push(pntVal);
-                arafVal = numVal.concat(letVal);
+                arrayFormatoAdcnl = arrayFormatoAdcnl.concat(letVal);
+                arrayFormatoAdcnl.push(espVal);
+                arrayFormatoAdcnl.push(cmmVal);
+                arrayFormatoAdcnl.push(pntVal);
+                arrayFormatoValor = arrayFormatoAdcnl;
                 break;
-        }
-        this.each(function () {
+        }        
+        this.each(function () {            
             var $this = $(this);
             if ($this.is('input:text')) {                
                 permitir = true;
-                $this.bind("cut copy",function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                });
                 $this.keyup(function(e) {
-                    //e.preventDefault();
-                    //e.stopPropagation();
-                    if(permitir){
-                        $this.val( $this.val().replace(expReg, function(str) {                             
-                            mostrarError($this,"Caracter no permitido borrado.");
-                            return '';
-                        }));
-                    }else
-                        permitir = true;
+                    keyPresionadoUP($this);
                     if(op == 1)
                         formatoDecimal($this,0);
                     
                 });
-                $this.keypress(function(e) {                    
-                    var pressedKey = e.keyCode?e.keyCode:e.which;
-                    for (i = 0; i < carVal.length; i++){
-                        if(carVal[i]==e.keyCode){
-                            permitir = false;
-                            return true;
-                        }
-                    }
-                    
-                    for (i = 0; i < arafVal.length; i++) {
-                        if(arafVal[i]==pressedKey||arafVal[i]==(pressedKey-espVal)){
-                            var str = String.fromCharCode(pressedKey);
-                            var startpos = this.selectionStart;
-                            var endpos = this.selectionEnd;
-                            var valor = this.value.substr(0, startpos) + this.value.substr(endpos);
-                            var position;
-                            if((valor+str).length > alength){
-                                mostrarError($this,"Este campo solo permite "+alength+" caracteres");
-                                position = startpos;
-                                this.value = valor;
-                            }else{
-                                this.value = this.value.substr(0, startpos) + str.toUpperCase() + this.value.substr(endpos);
-                                position = startpos + 1;
-                            }
-                            this.setSelectionRange(position, position);                            
-                            permitir = false;
-                            e.preventDefault();
-                            e.stopPropagation();
-                            return;
-                        }
-                    }
-                    mostrarError($this,"Caracter No Permitido.");                    
-                    e.preventDefault();
-                    e.stopPropagation();
+                $this.keypress(function(e) {
+                    keyPresionado(e, $this, this, true);
                     return;
                 });
                 $this.focusout(function(e) {
@@ -135,18 +112,109 @@
                     return;
                 });
             }
+            if ($this.is('textarea')) {
+                $this.keypress(function(e) {
+                    keyPresionado(e, $this, this, false);
+                });
+                $this.keyup(function(e) {
+                    this.style.height = "1px";
+                    this.style.height = this.scrollHeight+"px";
+                    keyPresionadoUP($this);                    
+                });
+            }
             return;
         });
+        function keyPresionadoUP(jlthis){
+            var text1 = jlthis.val().toUpperCase();
+            var textt = "";
+            if(permitir){ 
+                for (var i = 0; i < text1.length; i++) {
+                    if(normalizarText(text1.charCodeAt(i),jlthis)){
+                        textt += ''+text1.charAt(i);
+                    }
+                }
+                jlthis.val(textt);
+            }else{
+                permitir = true;
+            }            
+        }
+        function normalizarText(chart,jlthis) {
+            for(var i = 0; i < arrayFormatoValor.length; i++ ){
+                if(chart==arrayFormatoValor[i])
+                    return true;
+            }
+            mostrarError(jlthis,"Caracter "+String.fromCharCode(chart)+" borrado");
+            return false;
+        }
+        function keyPresionado(event, jlthis, thiss, controlLengt){
+            var pressedKey = event.keyCode;
+            //alert(event.keyCode+" - "+event.which+" = "+getBrowser());
+            if(getBrowser()=='Firefox' || getBrowser()=='Opera'){
+                pressedKey = event.which;                               
+            }
+            if(pressedKey=='0'){
+                permitir = false;
+                return;
+            } 
+            var forbiddenKeys = new Array("c", "x", "v");            
+            for (i = 0; i < carVal.length; i++){
+                if(carVal[i]==event.keyCode){
+                    permitir = false;
+                    return;
+                }
+            }
+            if (event.ctrlKey) {
+                permitir = false;
+                for (i = 0; i < forbiddenKeys.length; i++) {
+                    if (forbiddenKeys[i] == String.fromCharCode(pressedKey).toLowerCase()) {
+                        permitir = true;
+                        break;
+                    }
+                } 
+                return;
+            }
+            event.preventDefault();
+            event.stopPropagation();            
+            for (i = 0; i < arrayFormatoValor.length; i++) {
+                if(arrayFormatoValor[i]==pressedKey||arrayFormatoValor[i]==(pressedKey-espVal)){
+                    var varCharCode = String.fromCharCode(pressedKey);
+                    var startpos = thiss.selectionStart;
+                    var endpos = thiss.selectionEnd;
+                    var valor = thiss.value.substr(0, startpos) + thiss.value.substr(endpos);
+                    var varPosicion;
+                    if((valor+varCharCode).length > alength && controlLengt){
+                        mostrarError(jlthis,"Solo se permite "+alength+" caracter(es)");
+                        varPosicion = startpos;
+                        thiss.value = valor;
+                    }else{                        
+                        thiss.value = thiss.value.substr(0, startpos) + varCharCode.toUpperCase() + thiss.value.substr(endpos);
+                        varPosicion = startpos + 1;
+                    }                    
+                    thiss.setSelectionRange(varPosicion, varPosicion);
+                    permitir = false;                    
+                    return;
+                }
+            }
+            mostrarError(jlthis,"Caracter No Permitido.");
+            return;
+        }
         function mostrarError(thiss,valor){
-            thiss.after("<div id='error"+thiss.attr('name')+"'><span style='color: red;'>"+valor+"</span></div>");
-            $("#error"+thiss.attr('name')).fadeOut(2000); 
+            var nameComponent = 'mgeError-'+thiss.attr('name');
+            thiss.after("<div id='"+nameComponent+"'>\n\
+                            <span id='S"+nameComponent+"' style='color: red;'>"+valor+"\
+                            </span>\n\
+                        </div>");
+            $("#"+nameComponent).fadeOut(2000,function(){
+                $("#S"+nameComponent).remove();
+                $("#"+nameComponent).remove();
+            }); 
         }
         function caracteresPermitidos(thiss){
             var longitud = thiss.val().length;
             var resto = alength - longitud;
             if(resto < 0){
                 thiss.val(thiss.val().substring(0, alength));
-                mostrarError(thiss,"Este campo solo permite "+alength+" caracteres");
+                mostrarError(thiss,"Este campo permite "+alength+" caracter(es)");
                 return true;
             }
             return false;
@@ -193,6 +261,26 @@
                     }
                 }
             }
+        }
+        function getBrowser(){
+            var nAgt = navigator.userAgent;
+            var browserName  = navigator.appName;
+            if (nAgt.indexOf("Opera")!=-1) {
+                browserName = "Opera";
+            }
+            else if (nAgt.indexOf("MSIE")!=-1) {
+                browserName = "Internet Explorer";
+            }
+            else if (nAgt.indexOf("Chrome")!=-1) {
+                browserName = "Chrome";
+            }
+            else if (nAgt.indexOf("Safari")!=-1) {
+                browserName = "Safari";
+            }
+            else if (nAgt.indexOf("Firefox")!=-1) {
+                browserName = "Firefox";
+            }
+            return browserName;
         }
     }
     return this;    

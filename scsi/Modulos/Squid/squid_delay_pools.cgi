@@ -11,7 +11,12 @@ my $usuario = &validate;
 shared::header ("","squid.js");
 shared::modulo ("Delay Pool's");
 ######### config Area #########
-$squidconf = $config::squidconf;
+if ($config::squidver eq "2"){
+    $squidconf = $config::squidconf;
+}
+if ($config::squidver eq "3"){
+    $squidconf = $config::squid3conf;
+}
 ######################################
 if (!open(SQUIDCONF, "$squidconf")){
     &box("Error","El archivo $squidconf no existe.");

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$("#usuario").focus();
-        $("#nombre").convertUpper(6,20);
+        $("#nombre").convertUpper(6,50);
 
     $("#registrar").click(function(){
         registrar();

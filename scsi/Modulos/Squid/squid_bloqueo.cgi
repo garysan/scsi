@@ -14,7 +14,12 @@ shared::header ();
 shared::modulo ("Listas de bloqueo");
 ######### config Area #########
 $origen =~ s/\/scsi//g;
-$squidconf = $config::squidconf;
+if ($config::squidver eq "2"){
+    $squidconf = $config::squidconf;
+}
+if ($config::squidver eq "3"){
+    $squidconf = $config::squid3conf;
+}
 ######################################
 if (!open(SQUIDCONF, "$squidconf"))
 {

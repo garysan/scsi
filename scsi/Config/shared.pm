@@ -177,7 +177,7 @@ return @val[0];
 }
 sub copy_log{
 
-    my $SQUID_CP = '/Tools/bin/squid_copy';
+    my $SQUID_CP = '/scsi/scsi/Tools/bin/squid_copy';
     my $FLAG=0;
     my $ERROR        = '';
     if (!-x $SQUID_CP) {
@@ -196,7 +196,7 @@ sub copy_log{
 return $FLAG
 }
 sub perm_log{
-    my $SQUID_PR = '/Tools/bin/squid_perm';
+    my $SQUID_PR = '/scsi/scsi/Tools/bin/squid_perm';
     my $FLAG=0;
     my $ERROR        = '';
     if (!-x $SQUID_PR) {
@@ -219,7 +219,7 @@ return $FLAG
 }
 sub delete_log{
 
-    my $SQUID_DL = '/Tools/bin/squid_delete';
+    my $SQUID_DL = '/scsi/scsi/Tools/bin/squid_delete';
     my $FLAG=0;
     my $ERROR        = '';
     if (!-x $SQUID_DL) {
@@ -254,7 +254,7 @@ sub get_size{
 }
 
 sub squid_exe{
-    my $BINARY = '/Tools/bin/squid_executor';
+    my $BINARY = '/scsi/scsi/Tools/bin/squid_executor';
     print qq(Content-type: text/html \n\n);
     my $ERROR        = '';
     my $msg;
@@ -265,20 +265,20 @@ sub squid_exe{
        $ERROR = `$BINARY 2>&1`;
        $msg=$ERROR
        if ($ERROR);
-       $msg="<b>Modificado y aplicado con exito!</b>" 
+       $msg="<b>Squid, modificado y aplicado con exito!</b>" 
        if (!$ERROR);
     }
     else{
-        $msg="El archivo no existe!";
+        $msg="Error en Squid!";
     }		
     return $msg
 }
 
 sub iptables_exe{
-    my $BINARY = '/Tools/bin/iptables_executor';
+    my $BINARY = '/scsi/scsi/Tools/bin/iptables_executor';
     print qq(Content-type: text/html \n\n);
     my $ERROR        = '';
-    my $msg;
+    my $msg="";
     if (!-x $BINARY) {
             $BINARY = '';
     }
@@ -286,11 +286,11 @@ sub iptables_exe{
        $ERROR = `$BINARY 2>&1`;
        $msg=$ERROR
        if ($ERROR);
-       $msg="<b>Modificado y aplicado con exito!</b>" 
+            $msg="<b>iptables, modificado y aplicado con exito!</b>"
        if (!$ERROR);
     }
     else{
-        $msg="El archivo no existe!";
+        $msg="Error al ejecutar iptables!";
     }		
     return $msg
 }

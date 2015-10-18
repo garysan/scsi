@@ -10,10 +10,17 @@ use File::Basename;
 my $usuario = &validate;
 
 shared::header ("","squidguard.js");
-$filename = $config::squidguard;
+
 shared::modulo ("Administrar lista, Administradores");
 ######### config Area #########
-$squidguard = $config::squidguard;
+if ($config::squidver eq "2"){
+    $squidguard  = $config::sgbf;
+}
+if ($config::squidver eq "3"){
+    $squidguard = $config::sgbf3;
+}
+$filename = $squidguard;
+
 ######################################
 if (!open(SQUIDGUARD, "$squidguard"))
 {

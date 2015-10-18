@@ -9,10 +9,19 @@ use usuarios;
 my $usuario = &validate;
 
 ######### config Area #########
-$squidconf = $config::squidconf;
+if ($config::squidver eq "2"){
+    $squidconf = $config::squidconf;
+    $squidbin = $config::squidbin;
+    $sgbf = $config::sgbf;
+}
+
+if ($config::squidver eq "3"){
+    $squidconf = $config::squid3conf;
+    $squidbin = $config::squid3bin;
+    $sgbf = $config::sgbf3;
+}
+
 $cssfile = $config::cssfile;
-$squidbin = $config::squidbin;
-$sgbf = $config::sgbf;
 $patchdir = $config::patchdir;
 ######################################
 
@@ -34,8 +43,10 @@ $msg = " $config::title Corre bajo el nombre de usuario <i>$name</i><br><br>";
 $msg .= "<b>Archivo de configuracion Squid</b><br>\n";
 if (-e $squidconf) {
 	$msg .= $exists;
+
 	if (-r $squidconf) {
 		$msg .= $readable;
+                
 	} else { $msg .= $notreadable }
 	if (-w $squidconf) {
 		$msg .= $writable;
@@ -50,6 +61,18 @@ $msg .= "<b>Binario de Squid</b><br>\n";
 if (-e $squidbin) {
         $msg .= $exists;
         if (-x $squidbin) {
+                $msg .= $executable;
+        } else { $msg .= $notexecutable }
+	} else {
+	        $msg .=$doesnotexist;
+}
+$msg .= "<br><br>\n";
+
+#Verificar estado de IPTables
+$msg .= "<b>Binario de IPTables</b><br>\n";
+if (-e $iptables) {
+        $msg .= e$xists;
+        if (-x $iptables) {
                 $msg .= $executable;
         } else { $msg .= $notexecutable }
 	} else {
@@ -101,7 +124,7 @@ if ( $patchdir ne ""){
 				$msg .= $writable;
 			}else{ $msg .= $notwritable}
 		} else {
-			$msg .= $doesnotexist;
+			$msg .= "$doesnotexist, debe crear el directorio /patchdir";
 		}
 	$msg .= "<br><br>\n";
 }
@@ -110,7 +133,7 @@ $msg .= "<br><center><a href=\"check.cgi\">Verificar nuevamente</a></center>";
 #shared::htmlbox
 shared::header();
 print qq(
-    <div class="center_screen">
+    <div class="contenedor">
     <h3>Verificando Archivos</h3>
     <br/>$msg
     </div>

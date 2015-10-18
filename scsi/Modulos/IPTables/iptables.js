@@ -16,11 +16,11 @@ function save(ant,nue,arch){
         data:{flag:flag,original:original,nuevo:nuevo,arch:arch},
         success: function(msg){
             $("#resultado").fadeIn(0);
-            $("#resultado").html(msg).fadeOut(3000);
+            $("#resultado").html(msg);
         },
         error: function(){
             $("#resultado").fadeIn(0);
-            $("#resultado").html(msg).fadeOut(3000);
+            $("#resultado").html("Error en funcion save.");
             
         }
     }); // ajax
@@ -29,22 +29,33 @@ function save(ant,nue,arch){
 function adicionar(tag,val){
         var ip=prompt("Direccion IP");
         var arch=$("#archivo").val();
-        ant=val;
-        nue=ant+","+ip;
+        var ant=val;
+        var nue=ant+","+ip;
         
-	save(ant,nue,arch);
-        apply();
-	recarga();
+        if (ip!==""||ip.leght===0){
+            save(ant,nue,arch);
+            apply();
+            recarga();
+        }
+        else{
+            alert("El ip no puede estar vacio");
+        }
 }
 
 function adicionar_url(tag,val){
         var url=prompt("Dirección WEB, Dominio ej: www.facebook.com ej: facebook.com");
         var arch=$("#archivo").val();
-        ant=val;
-        nue=ant+","+url;
-        save(ant,nue,arch);
-        apply();
-	recarga();
+        var ant=val;
+        var nue=ant+","+url;
+        if (url!==""){
+            save(ant,nue,arch);
+            apply();
+            recarga();
+        }
+        else{
+            alert("El url no puede estar vacio");
+        }
+        
 }
 
 function quitar(i,ip){
@@ -87,39 +98,15 @@ function apply(){
         data:{flag:flag},
         success: function(msg){
         	$("#resultado").fadeIn(0);
-                $("#resultado").html(msg).fadeOut(3000);
+                $("#resultado").html(msg);
         },
         error: function(){
             $("#resultado").fadeIn(0);
-            $("#resultado").html(msg).fadeOut(3000);
+            $("#resultado").html("Error en apply");
             
         }
       }); // ajax
 }
-
-function modificar(tag,i){
-        var ant=("="+"\""+i+"\"");
-	var arch=$("#archivo").val();
-	var nue=("="+"\""+$("#"+tag).val()+"\"");    
-        if (tag=="server"){
-            ant=("SERVER="+"\""+i+"\"");
-            nue=("SERVER="+"\""+$("#"+tag).val()+"\"");    
-        }
-        if (tag=="glob"){
-            if (i=="SI"){
-                ant="GLOB_BLOCK=\"SI\"";
-                nue="GLOB_BLOCK=\"NO\"";
-            }
-            else{
-                nue="GLOB_BLOCK=\"SI\"";
-                ant="GLOB_BLOCK=\"NO\"";
-            }
-        }
-        save(ant,nue,arch);
-        apply();
-	recarga();
-}
-
 function recarga()
 {
 	//parent.frames['top'].location.recarga(true);
